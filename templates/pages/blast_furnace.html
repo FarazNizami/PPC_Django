@@ -1,0 +1,435 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}NMDC Steel Limited{% endblock %}
+
+{% block content %}{% load static %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .card {
+        margin: 10px;
+        border-radius: 10px;
+    }
+    
+    .box {
+        border: 2px solid #007bff;
+        padding: 2px;
+        text-align: center;
+        margin: 1px 0;
+        border-radius: 10px;
+        background-color: white;
+    }
+    input[type=text] {
+        width: 85px;
+        color: chartreuse;
+        background-color: black;
+    }
+    .card-body {
+        background-color: #f4f3f1;
+        width: 100%;
+        padding: 0px;
+    }
+   
+    table tr {
+        line-height: 1; /* Reduce line spacing */
+        margin: 0;
+        padding: 2px 0; /* Reduce vertical padding */
+    }
+
+    table td {
+        padding: 4px 8px; /* Adjust padding as needed */
+    }
+    td p {
+        white-space: nowrap; /* Prevents text from wrapping */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Adds "..." if text overflows */
+    }
+
+   /* New CSS for layout adjustments */
+   .container-fluid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .col-md-5, .col-md-7 {
+        flex: 1;
+        min-width: 45%; /* Ensure columns don't overlap */
+        padding: 0 10px; /* Add some padding between columns */
+    }
+    .card {
+        margin-bottom: 10px; /* Add margin between cards */
+    }
+    .table-borderless td, .table-borderless th {
+        padding: 4px 8px; /* Adjust padding for better alignment */
+    }
+    .d-flex, .d-inline-flex {
+        align-items: center; /* Align items vertically */
+    }
+
+    /* Ensure CPP/PCI Weights box matches Temperature box width */
+    .col-md-7 .card {
+        width: 100%; /* Ensure full width */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .col-md-5, .col-md-7 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Left Panel -->
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Blast Pressure Table -->
+                        <table class="table table-borderless table-striped">
+                            <tbody>                           
+                            <tr>
+                                <td><p>COLD BLAST PRESSURE:</p></td>
+                                <td><input type="text" id="cold_blast_pressure" class="form-control rounded-pill" placeholder="" value="{{latest_blast_pressure.cold_blast_pressure}}"></td>
+                                <td>Kg/Cm2</td>
+                            </tr>
+                            <tr>
+                                <td><p>HOT BLAST PRESSURE:</p></td>
+                                <td><input type="text" id="hot_blast_pressure" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_pressure.hot_blast_pressure }}"></td>
+                                <td>Kg/Cm2</td>
+                            </tr>
+                            <tr>
+                                <td><p>COLD BLAST FLOW:</p></td>
+                                <td><input type="text" id="cold_blast_flow" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_pressure.cold_blast_flow }}"></td>
+                                <td>Nm3/h</td>
+                            </tr>
+                            <tr>
+                                <td><div class="d-flex"><p>HOT BLAST FLOW:</p></td>
+                                <td><input type="text" id="hot_blast_flow" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.hot_blast_flow }}"></td>
+                                <td>Nm3/h</td></div>
+                            </tr>
+                            <tr>
+                                <td><div class="d-flex"><p>HOT BLAST TEMPERATURE:</p></td>
+                                <td><input type="text" id="hot_blast_temperature" class="form-control rounded-pill" placeholder=""value="{{  latest_blast_pressure.hot_blast_temperature }}"></td>
+                                <td>°C</td></div><td><div class="d-inline-flex "></td>
+                            </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>RAFT:</p></td>
+                                    <td><input type="text" id="raft" class="form-control rounded-pill" placeholder=""value="{{  latest_blast_pressure.raft}}"></td>
+                                    <td>°C</td>  
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="me-2">NEW CALC.:</span> <!-- Add label before input -->
+                                            <input type="text" id="new_calc" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_pressure.new_calc}}">
+                                        </div>
+                                    </td>                                  
+                                </tr>                                
+                                <tr>
+                                    <td><div class="d-flex"><p>TOP PRESSURE:</p></td>
+                                    <td><input type="text" id="top_pressure" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.top_pressure}}"></td>
+                                    <td>Kg/Cm2</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>D - PRESSURE BURDEN:</p></td>
+                                    <td><input type="text" id="d_pressure_burden" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.d_pressure_burden }}"></td>
+                                    <td>Kg/Cm2</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>DISCHARGE LEVEL:</p></td>
+                                    <td><input type="text" id="discharge_level" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.discharge_level }}"></td>
+                                    <td>m</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>CURRENT BURDEN LEVEL:</p></td>
+                                    <td><input type="text" id="current_burden_level" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.current_burden_level }}"></td>
+                                    <td>m</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>MOISTURE IN HOT BLAST:</p></td>
+                                    <td><input type="text" id="moisture_in_hot_blast" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.moisture_in_hot_blast }}"></td>
+                                    <td>Gr/Nm3</td></div></td>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-inline-flex"><p>COAL INJECTION RATE:</p></td>
+                                    <td><input type="text" id="coal_injection_rate_ton" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.coal_injection_rate }}"><td>Ton/hr</td></td>
+                                    <td>
+                                        <div class="d-inline-flex align-items-center">
+                                            <span class="me-2">SP:</span> <!-- Add label before input -->
+                                            <input type="text" id="sp" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_pressure.sp }}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>COAL INJECTION RATE:</p></td>
+                                    <td><input type="text" id="coal_injection_rate" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.coal_injection_rate }}"></td>
+                                    <td>Kg/THM</td></div>
+                                </tr>
+                                
+                                <tr>
+                                    <td><div class="d-flex"><p>OXYGEN INJECTION:</p></td>
+                                    <td><input type="text" id="oxygen_injection" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.oxygen_injection }}"></td>
+                                    <td>nm3/hr</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>TOP_DP:</p></td>
+                                    <td><input type="text" id="top_dp" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.top_dp }}"></td>
+                                    <td>kg/Cm2</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>MID_DP:</p></td>
+                                    <td><input type="text" id="mid_dp" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_pressure.mid_dp }}"></td>
+                                    <td>kg/Cm2</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>BOTTOM_DP:</p></td>
+                                    <td><input type="text" id="bottom_dp" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.bottom_dp }}"></td>
+                                    <td>kg/Cm2</td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-inline-flex"><p>BOTTOM(K)/MID(K):</p></td>
+                                    <td><input type="text" id="bottom_k" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.bottom_k }}"></td></div>
+                                    <td><div class="d-inline-flex"><input type="text" id="mid_k" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.mid_k }}"></td></div>
+                                </tr>
+                                <tr>
+                                    <td><div class="d-flex"><p>PERMEABILITY(K-SUM):</p></td>
+                                    <td><input type="text" id="permeability_k_sum" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.permeability_k_sum }}"></td></div>
+                                </tr>
+                                <tr>
+                                    <td><p>CHARGE PER SHIFT:</p></td>
+                                    <td><div class="d-flex"><p>A&nbsp;&nbsp;<input type="text" id="charge_shift_a" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.charge_shift_a }}"></p></div></td>
+                                    <td><div class="d-flex"><p>B&nbsp;&nbsp;<input type="text" id="charge_shift_b" class="form-control rounded-pill" placeholder="" value="{{  latest_blast_pressure.charge_shift_b }}"></p></div></td>
+                                    <td><div class="d-flex"><p>C&nbsp;&nbsp;<input type="text" id="charge_shift_c" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_pressure.charge_shift_c }}"></p></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Right Panel -->
+            <div class="col-md-7">
+                <div class="row">
+                    <!-- Blast Flow Table -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-borderless table-striped">
+                                    <tbody>
+                                        <tr style=" vertical-align: middle">
+                                            <td><p>HOT METAL<br> TEMP.</p>{{latest_blast_flow.hot_metal_temp }}</td>
+                                            <td><div class="d-inline-flex"><p>TH-1&nbsp;&nbsp;<input type="text" id="hot_metal_temp_th1" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_flow.hot_metal_temp_th1 }}"></p>°C</div></td>
+                                            <td><div class="d-inline-flex"><p>TH-2&nbsp;&nbsp;<input type="text" id="hot_metal_temp_th2" class="form-control rounded-pill" placeholder="" value="{{latest_blast_flow.hot_metal_temp_th2 }}"></p>°C</div></td>
+                                            <td><div class="d-inline-flex"><p>TH-3&nbsp;&nbsp;<input type="text" id="hot_metal_temp_th3" class="form-control rounded-pill" placeholder="" value="{{latest_blast_flow.hot_metal_temp_th3 }}"></p>°C</div></td>
+                                            <td><div class="d-inline-flex"><p>TH-4&nbsp;&nbsp;<input type="text" id="hot_metal_temp_th4" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_flow.hot_metal_temp_th4 }}"></p>°C</div></td>
+                                        </tr>                    
+                                        <tr style=" vertical-align: middle">
+                                            <td><p>UPTAKE <br> TEMP.</p>{{latest_blast_flow.uptake_temp }}</td>
+                                            <td><div class="d-inline-flex"><p>A&nbsp;&nbsp;<input type="text" id="uptake_temp_a" class="form-control rounded-pill" placeholder="" value="{{latest_blast_flow.uptake_temp_a }}"></p>°C</div></td>
+                                            <td><div class="d-inline-flex"><p>B&nbsp;&nbsp;<input type="text" id="uptake_temp_b" class="form-control rounded-pill" placeholder="" value="{{ latest_blast_flow.uptake_temp_b }}"></p>°C</div></td>
+                                            <td><div class="d-inline-flex"><p>C&nbsp;&nbsp;<input type="text" id="uptake_temp_c" class="form-control rounded-pill" placeholder="" value="{{latest_blast_flow.uptake_temp_c}}"></p>°C</div></td>
+                                            <td><div class="d-inline-flex"><p>D&nbsp;&nbsp;<input type="text" id="uptake_temp_d" class="form-control rounded-pill" placeholder="" value="{{latest_blast_flow.uptake_temp_d }}"></p>°C</div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Temperature Table -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-borderless table-striped">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>PARAMETER</th>
+                                            <th>TOTAL FLOW</th>
+                                            <th>PRESSURE</th>
+                                            <th></th>
+                                            <th>TANK LEVEL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th>PARAMETER</th>
+                                            <th>TOTAL FLOW</th>
+                                            <th>PRESSURE</th>
+                                            <th></th>
+                                            <th>TANK LEVEL</th>
+                                        </tr>
+                                    </thead>                                    
+                                        <tr>
+                                            <td>TUYERE COOLING</td>
+                                            <td style="font-size: 12px"><input type="text" id="tuyere_cooling_flow" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.tuyere_cooling_total_flow}}"> m3/hr</td>
+                                            <td style="font-size: 12px"><input type="text" id="tuyere_cooling_pressure_1" class="form-control rounded-pill" placeholder="" value="{{ latest_temperature.tuyere_cooling_pressure_1}}"></div> kg/cm2</td>
+                                            <td style="font-size: 12px"><input type="text" id="tuyere_cooling_pressure_2" class="form-control rounded-pill" placeholder="" value="{{ latest_temperature.tuyere_cooling_pressure_2}}"></div> kg/cm2</td>
+                                            <td style="font-size: 12px"><input type="text" id="tuyere_cooling_tank_level" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.tuyere_cooling_tank_level}}"> %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>STACK COOLING</td>
+                                            <td style="font-size: 12px"><input type="text" id="stack_cooling_flow" class="form-control rounded-pill" placeholder="" value="{{ latest_temperature.stack_cooling_total_flow}}"> m3/hr</td>
+                                            <td style="font-size: 12px"><input type="text" id="stack_cooling_pressure" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.stack_cooling_pressure}}"> kg/cm2</td>
+                                            <td></td>
+                                            <td style="font-size: 12px"><input type="text" id="stack_cooling_tank_level" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.stack_cooling_tank_level}}"> %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HEARTH & BOTTOM</td>
+                                            <td style="font-size: 12px"><input type="text" id="hearth_bottom_flow" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.hearth_bottom_total_flow}}"> m3/hr</td>
+                                            <td style="font-size: 12px"><input type="text" id="hearth_bottom_pressure" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.hearth_bottom_pressure}}"> kg/cm2</td>
+                                            <td></td>
+                                            <td style="font-size: 12px"><input type="text" id="hearth_bottom_tank_level" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.hearth_bottom_tank_level}}"> %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SECONDARY COOLING</td>
+                                            <td style="font-size: 12px"><input type="text" id="secondary_cooling_flow" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.secondary_cooling_total_flow}}"> m3/hr</td>
+                                            <td style="font-size: 12px"><input type="text" id="secondary_cooling_pressure" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.secondary_cooling_pressure}}"> kg/cm2</td>
+                                            <td></td>
+                                            <td style="font-size: 12px"><input type="text" id="secondary_cooling_tank_level" class="form-control rounded-pill" placeholder="" value="{{ latest_temperature.secondary_cooling_tank_level}}"> %</td>
+                                        </tr>
+                                        <tr>
+                                            <td>BLT COOLING FLOW</td>
+                                            <td style="font-size: 12px"><input type="text" id="blt_cooling_flow" class="form-control rounded-pill" placeholder="" value="{{ latest_temperature.blt_cooling_flow_total_flow}}"> m3/hr</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="font-size: 12px"><input type="text" id="blt_cooling_tank_level" class="form-control rounded-pill" placeholder="" value="{{ latest_temperature.blt_cooling_tank_level}}"> Mm</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HEAT LOAD <br>(GJ/hr)</td>
+                                            <td style="font-size: 13px"><div class="d-inline-flex"><p>STACK&nbsp;&nbsp;<input type="text" id="heat_load_flow" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.heat_load_total_flow}}"></p></div></td>
+                                            <td style="font-size: 13px"><div class="d-inline-flex"><p>TUYERE&nbsp;&nbsp;<input type="text" id="heat_load_pressure" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.heat_load_pressure}}"></p></div></td>
+                                            <td></td>
+                                            <td style="font-size: 13px"><div class="d-inline-flex"><p>HEARTH&nbsp;&nbsp;<input type="text" id="heat_load_tank_level" class="form-control rounded-pill" placeholder="" value="{{latest_temperature.heat_load_tank_level}}"></p></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>   
+        
+                    <!-- CPP/PCI Weights Table -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table table-borderless table-striped">
+                                    <tbody>
+                                    <tr>
+                                        <td>FEED TANK-1:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="feed_tank_1" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.feed_tank_1}}">Ton
+                                            </div>
+                                        </td>
+                                        <td>PCI N2 SUPPLY PR:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="pci_n2_supply_pr" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.pci_n2_supply_pr}}">kg/cm2
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FEED TANK-2:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="feed_tank_2" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.feed_tank_2}}">Ton
+                                            </div>
+                                        </td>
+                                        <td>INST. SUPPLY PR:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="inst_supply_pr" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.inst_supply_pr}}">kg/cm2
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FEED TANK-3:</p></td>
+                                        <td style="font-size: 12px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="feed_tank_3" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.feed_tank_3}}">Ton
+                                            </div>
+                                        </td>
+                                        <td>LANCES ON COAL:</p></td>
+                                        <td style="font-size: 12px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="lances_on_coal" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.lances_on_coal}}">nos.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>FCS WEIGHT:</p></td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="fcs_weight" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.fcs_weight}}">Ton
+                                            </div>
+                                        </td>
+                                        <td>HMT PRODUCTION:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="hmt_production" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.hmt_production}}">Ton/hr
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>RCS-1 WT:</p></td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="rcs_1_weight" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.rcs_1_weight}}">Ton
+                                            </div>
+                                        </td>                            
+                                    <tr>
+                                        <td>RCS-2 WT:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="rcs_2_weight" class="form-control rounded-pill" placeholder="" value="{{ latest_cpp_pci_weights.rcs_2_weight}}">Ton
+                                            </div>
+                                        </td>
+                                        <td>LOW PRESSURE N2:</td>
+                                        <td style="font-size: 13px">
+                                            <div class="d-inline-flex">
+                                                <input type="text" id="low_pressure_n2" class="form-control rounded-pill" placeholder="" value="{{latest_cpp_pci_weights.low_pressure_n2}}">kg/cm2
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+             <!-- Press Table -->
+             <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-borderless table-striped">
+                            <tbody>
+                                <tr>
+                                    <td>FF-SPRAY PRESS:</td>
+                                    <td style="font-size: 13px">
+                                        <div class="d-inline-flex">
+                                            <input type="text" id="ff_spray_press" class="form-control rounded-pill" placeholder="" value="{{ latest_press.ff_spray_press}}">kg/cm2
+                                        </div>
+                                    </td>
+                                    <td>FF-HYD. PRESS:</td>
+                                    <td style="font-size: 13px">
+                                        <div class="d-inline-flex">
+                                            <input type="text" id="ff_hyd_press" class="form-control rounded-pill" placeholder="" value="{{latest_press.ff_hyd_press}}">kg/cm2
+                                        </div>
+                                    </td>
+                                </tr>            
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'layout/base.html' %}
+
+{% block title %}CLOUD_PROJECT{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ user.username }}!</h2>
+    <a href="{% url 'blastfurnace' %}">Go to Blast Furnace</a>
+   
+{% endblock %}
+
+{% endblock %}

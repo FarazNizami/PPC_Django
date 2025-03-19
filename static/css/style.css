@@ -1,0 +1,101 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.table{
+    margin-bottom: unset;
+    margin-top: unset;
+}
+
+.green {
+    background-color: green;
+}
+
+.red {
+    background-color: red;
+}
+
+/* Box Style */
+.box {
+    border: 2px solid #007bff;
+    padding: 2px;
+    text-align: center;
+    margin: 1px 0;
+    border-radius: 10px;
+    background-color: white;
+}
+
+/* Input Field Styling */
+input[type="text"] {
+    width: 70px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.table-borderless td, 
+.table-borderless th {
+    border: none;
+    
+}
+
+/* Headings */
+h5.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Utility Classes */
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+/* Sidebar Styling */
+#sidebar {
+    align-self: baseline;   
+    background: #cfc9c9; /* White Background */
+    box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2); /* Subtle Shadow */
+    padding-top: 20px;
+    height: auto;
+}
+
+/* Sidebar Links */
+.sidebar-link {
+    color: black !important; /* Black text */
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.sidebar-link:hover {
+    background: black; /* Black background on hover */
+    color: white !important; /* White text on hover */
+    border-radius: 5px;
+    align-items: baseline;
+}
+
+/* Sidebar Icons */
+.icon {
+    width: 32px; /* Increased size */
+
+}
+
+
