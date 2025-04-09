@@ -3,7 +3,87 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.table{
+.card {
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.box {
+    border: 2px solid #007bff;
+    padding: 2px;
+    text-align: center;
+    margin: 1px 0;
+    border-radius: 10px;
+    background-color: white;
+}
+
+input[type="text"] {
+    width: 85px;
+    color: chartreuse;
+    background-color: black;
+}
+
+.card-body {
+    background-color: #f4f3f1;
+    width: 100%;
+    padding: 0px;
+}
+
+table tr {
+    line-height: 1; /* Reduce line spacing */
+    margin: 0;
+    padding: 2px 0; /* Reduce vertical padding */
+}
+
+table td {
+    padding: 4px 8px; /* Adjust padding as needed */
+}
+
+td p {
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Adds "..." if text overflows */
+}
+
+/* New CSS for layout adjustments */
+.container-fluid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-md-5, .col-md-7 {
+    flex: 1;
+    min-width: 45%; /* Ensure columns don't overlap */
+    padding: 0 10px; /* Add some padding between columns */
+}
+
+.card {
+    margin-bottom: 10px; /* Add margin between cards */
+}
+
+.table-borderless td, .table-borderless th {
+    padding: 4px 8px; /* Adjust padding for better alignment */
+}
+
+.d-flex, .d-inline-flex {
+    align-items: center; /* Align items vertically */
+}
+
+/* Ensure CPP/PCI Weights box matches Temperature box width */
+.col-md-7 .card {
+    width: 100%; /* Ensure full width */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .col-md-5, .col-md-7 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Original styles from static/css/style.css */
+.table {
     margin-bottom: unset;
     margin-top: unset;
 }
@@ -16,17 +96,6 @@ body {
     background-color: red;
 }
 
-/* Box Style */
-.box {
-    border: 2px solid #007bff;
-    padding: 2px;
-    text-align: center;
-    margin: 1px 0;
-    border-radius: 10px;
-    background-color: white;
-}
-
-/* Input Field Styling */
 input[type="text"] {
     width: 70px;
     padding: 5px;
@@ -35,7 +104,6 @@ input[type="text"] {
     text-align: center;
 }
 
-/* Table Styling */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -50,31 +118,26 @@ input[type="text"] {
 .table-borderless td, 
 .table-borderless th {
     border: none;
-    
 }
 
-/* Headings */
 h5.card-title {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 10px;
 }
 
-/* Utility Classes */
 .mt-4 {
     margin-top: 1.5rem;
 }
 
-/* Sidebar Styling */
 #sidebar {
-    align-self: baseline;   
+    align-self: stretch;   /* Ensure the sidebar stretches to full height */
     background: #cfc9c9; /* White Background */
     box-shadow: 5px 0 10px rgba(0, 0, 0, 0.2); /* Subtle Shadow */
     padding-top: 20px;
-    height: auto;
+    height: 100vh; /* Set height to full viewport height */
 }
 
-/* Sidebar Links */
 .sidebar-link {
     color: black !important; /* Black text */
     font-size: 16px;
@@ -92,10 +155,12 @@ h5.card-title {
     align-items: baseline;
 }
 
-/* Sidebar Icons */
 .icon {
     width: 32px; /* Increased size */
-
 }
 
-
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #009e00;
+}
